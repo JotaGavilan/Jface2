@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+  <link rel="manifest" href="icons/site.webmanifest">
+  <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P.I.A.R II. Cap amb IA </title>
+  <link rel="stylesheet" href="./css/style.css">
+
+</head>
+<body>
+  <h1 style="display: flex; align-items: center; gap: 0.5em;">
+    <img src="icons/android-chrome-512x512.png" alt="Icono" style="width: 2em; height: 2em; margin-top: -0.2em;">
+    P.I.A.R II. Cap amb IA
+  </h1>
+    <div id="video-container">
+<video id="video" autoplay muted playsinline></video>
+<canvas id="canvas"></canvas>
+</div>
+<div id="data-panel">Gir horitzontal: <span id="yaw">--</span> | Boca: <span id="mouth">--</span> | Ull E: <span id="eyeL">-</span> | Ull D: <span id="eyeR">-</span></div>
+
+  <div id="controls">
+    <button id="connectBtn">🔵 Connectar</button>
+    <button id="configBtn">⚙️ Configurar</button>
+    <button id="fullscreenBtn">⛶ Pantalla completa</button>
+    <button id="infoBtn">ℹ️ Informació</button>
+    <div id="status">⏳ Esperant connexió...</div>
+  </div>
+
+  <div id="config-layer" style="display: none;">
+    <div class="info-box">
+      <h2>⚙️ Configuració</h2>
+      
+      <div class="interval-control">
+        <label for="intervalSlider">Interval d'enviament:</label>
+        <input type="range" id="intervalSlider" min="1" max="15" value="2" step="1">
+        <span id="intervalLabel">2s</span>
+      </div>
+      <p style="font-size:0.85em; margin-top:0.5rem; color: #7d8590;">
+        Cada quants segons s'envien les dades a la micro:bit per Bluetooth.
+        <br><strong>Nota:</strong> encara que tries 1s, si no hi ha canvis en cap, boca o ulls, no s'envia res fins que hi haja un canvi.
+      </p>
+
+      <button class="close-btn" onclick="document.getElementById('config-layer').style.display='none'">Tancar</button>
+    </div>
+  </div>
+
+  <div id="info-layer" style="display: none;"><div class="info-box">
+    <h2>Informació del funcionament</h2>
+    <p>Aquesta aplicació utilitza intel·ligència artificial( <a href="https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker?hl=es-419" target="_blank">MediaPipe Face Mesh de Google</a> ) per detectar la posició del cap, l’obertura de la boca i l’estat dels ulls en temps real, i envia aquestes dades a una micro:bit a través de Bluetooth (sense emparellament).</p>
+    <p><strong>Format de dades enviades per UART (6 dígits):</strong></p>
+    <ul>
+      <li><strong>2 dígits:</strong> gir horitzontal del cap (00 a 99)</li>
+      <li><strong>2 dígits:</strong> obertura de boca (00 a 99)</li>
+      <li><strong>1 dígit:</strong> ull esquerre (0 = tancat, 1 = obert)</li>
+      <li><strong>1 dígit:</strong> ull dret (0 = tancat, 1 = obert)</li>
+    </ul>
+    <p><strong>Exemple:</strong> <code>731010</code> → cap 73, boca 10, ull esquerre obert, dret tancat.</p>
+ 
+    <p>Aquesta app NO envia dades a cap servidor. Tot el processament es fa al navegador localment.Una vegada oberta la pàgina web pots llevar la connexió a Internet del teu mòbil per a assegurar-te que funciona sense enviar cap dada a servidors externs.</p>
+    <p>Projecte inspirat en: <a href="https://cardboard.lofirobot.com" target="_blank">cardboard.lofirobot.com</a></p>
+    <p>Fet per J. amb ❤️ i tecnologia IA</p>
+    <p>IES Jorge Juan, Alacant, 2025</p>
+    <button class="close-btn" onclick="document.getElementById('info-layer').style.display='none'">Tancar</button></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="./js/bluetooth_uart.js"></script>
+  <script src="./js/video_facial_tracking.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+</html>
