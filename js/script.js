@@ -16,7 +16,8 @@ document.getElementById('fullscreenBtn').onclick = () => {
   const intervalLabel  = document.getElementById('intervalLabel');
   
   intervalSlider.addEventListener('input', () => {
-    const secs = parseInt(intervalSlider.value);
-    window.sendIntervalMs = secs * 1000;
-    intervalLabel.textContent = `${secs}s`;
+    const value = parseInt(intervalSlider.value);
+    const seconds = value / 10;  // 1→0.1s, 20→2.0s
+    window.sendIntervalMs = seconds * 1000;
+    intervalLabel.textContent = `${seconds.toFixed(1)}s`;
   });

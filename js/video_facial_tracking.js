@@ -17,7 +17,7 @@ let lastData = null;  // Últimes dades detectades
 let hadData = false;  // Recorda si hi havia dada abans
 
 // Interval configurable (modificat des de script.js)
-window.sendIntervalMs = 2000;
+window.sendIntervalMs = 200;  // 0.2s per defecte
 
 // Bucle d'enviament per intervals (igual que jHort)
 function scheduleSend() {
